@@ -6,6 +6,8 @@
 .idea/**/dictionaries
 .idea/**/shelf
 *.iml
+.idea
+.env
 # AWS User-specific
 .idea/**/aws.xml
 
