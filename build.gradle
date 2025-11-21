@@ -12,6 +12,12 @@ ext {
     springCloudVersion = '2025.0.0'
 }
 
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
@@ -20,10 +26,6 @@ subprojects {
     group = 'com.sspdev'
     version = '0.0.1-SNAPSHOT'
     description = 'multi-module'
-
-    repositories {
-        mavenCentral()
-    }
 
     dependencyManagement {
         imports {
