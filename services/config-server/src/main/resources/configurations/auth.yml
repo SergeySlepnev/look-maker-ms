@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: sspdev
+    password: sspdev
+    url: jdbc:postgresql://localhost:5432/auth_db
+
+  liquibase:
+    change-log: classpath:/db/migration/db.changelog-master.yaml
+    default-schema: liquibase
+
+server:
+  port: 9000
