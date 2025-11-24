@@ -1,18 +1,18 @@
---liquibase format sql
+--liquibase formated sql
 
---changeset auth_gb:1
+--changeset sspdev:001-create-extension-citext
 CREATE EXTENSION IF NOT EXISTS "citext";
---rollback DROP EXTENSION IF EXISTS "citext"
+--rollback DROP EXTENSION IF EXISTS "citext";
 
---changeset auth_gb:2
+--changeset sspdev:002-create-extension-pgcrypto
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
---rollback DROP EXTENSION IF EXISTS "pgcrypto"
+--rollback DROP EXTENSION IF EXISTS "pgcrypto";
 
---changeset auth_db:3
+--changeset sspdev:003-create-auth-schema
 CREATE SCHEMA IF NOT EXISTS auth;
---rollback DROP SCHEMA IF EXISTS auth
+--rollback DROP SCHEMA IF EXISTS auth;
 
---changeset auth_db:4
+--changeset sspdev:004-create-auth-table
 CREATE TABLE IF NOT EXISTS auth.user_identity
 (
     id            UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -22,4 +22,4 @@ CREATE TABLE IF NOT EXISTS auth.user_identity
     password_algo TEXT             DEFAULT 'bcrypt' NOT NULL,
     CHECK (email IS NOT NULL OR phone IS NOT NULL)
 );
---rollback DROP TABLE IF EXISTS auth.user_identity
+--rollback DROP TABLE IF EXISTS auth.user_identity;
