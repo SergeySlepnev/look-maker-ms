@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: 001-auth_db_core_setup.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 002-drop-defaults-id-password_algo.sql
+      relativeToChangelogFile: true
