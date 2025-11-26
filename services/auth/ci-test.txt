@@ -1,1 +1,1 @@
-This file is created to check ci-workflow for auth service.
+This file is created to check ci workflow for auth service.
