@@ -12,7 +12,7 @@ on:
 
 jobs:
   build-test:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     env:
       DB_URL: jdbc:postgresql://localhost:5432/auth_db
