@@ -5,10 +5,11 @@ on:
     branches: [ develop ]
     paths:
       - 'services/auth/**'
-    pull-request:
-      branches: [ develop ]
-      paths:
-        - 'services/auth/***'
+  pull_request:
+    branches: [ develop ]
+    paths:
+      - 'services/auth/**'
+  workflow_dispatch:
 
 jobs:
   build-test:
@@ -35,21 +36,20 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper/
-          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile', 'services/auth.build.gradle') }}
+          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile', 'services/auth/build.gradle') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
 
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
 
-      - name: Start postgres_aut_db service
-        run: docker-compose -f docker-compose.yml up -d postgres_auth_db
-
+      - name: Start postgres_auth_db service
+        run: docker compose -f compose.yml up -d postgres_auth_db
 
       - name: Wait for Postgres to be ready
         run: |
           for i in {1..30}; do
-            docker exec auth_db pg_isready -U sspdev -d auth_db && break
+            docker exec auth_db pg_isready -U sspdev -d auth_db >/dev/null 2>&1 && break
             echo "Waiting for Postgres..."
             sleep 2
           done
@@ -59,5 +59,4 @@ jobs:
 
       - name: Shutdown postgres_auth_db service
         if: always()
-        run: docker-compose -f docker-compose.yml down
-
+        run: docker compose -f compose.yml down
