@@ -44,7 +44,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Start postgres_auth_db service
-        run: docker compose -f docker-compose.yml up -d postgres_auth_db
+        run: docker compose -f compose.yml up -d postgres_auth_db
 
       - name: Wait for Postgres to be ready
         run: |
@@ -59,4 +59,4 @@ jobs:
 
       - name: Shutdown postgres_auth_db service
         if: always()
-        run: docker compose -f docker-compose.yml down
+        run: docker compose -f compose.yml down
