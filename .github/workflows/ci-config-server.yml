@@ -1,0 +1,41 @@
+name: CI - Config server (Java 21, Gradle)
+
+on:
+  push:
+    branches: [ develop ]
+    paths:
+      - 'services/config-server/**'
+  pull_request:
+    branches: [ develop ]
+    paths:
+      - 'services/config-server/**'
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: cache Gradle modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile', 'services/config-server/build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Ensure Gradle wrapper is executable
+        run: chmod +x ./gradlew
+
+      - name: Build and run unit tests for auth module
+        run: ./gradlew --no-daemon :services:config-server:clean :services:config-server:build
