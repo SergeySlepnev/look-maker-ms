@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_URL: jdbc:postgresql://localhost:5432/auth_db
-      DB_USER: sspdev
-      DB_PASSWORD: sspdev
+      DB_URL: jdbc:postgresql://${{ AUTH_DB_HOST }}:5432/auth_db
+      DB_USER: ${{ secrets.AUTH_DB_USER }}
+      DB_PASSWORD: ${{ secrets.AUTH_DB_PASSWORD }}
 
     steps:
       - name: Checkout repository
