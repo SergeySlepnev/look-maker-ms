@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: sspdev
-    password: sspdev
-    url: jdbc:postgresql://localhost:5432/auth_db
+    username: ${AUTH_DB_USER}
+    password: ${AUTH_DB_PASSWORD}
+    url: jdbc:postgresql://${AUTH_DB_HOST}:5432/auth_db
 
   liquibase:
     change-log: classpath:/db/migration/db.changelog-master.yaml
