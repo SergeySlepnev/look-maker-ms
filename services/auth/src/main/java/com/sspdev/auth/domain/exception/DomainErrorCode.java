@@ -1,8 +1,10 @@
 package com.sspdev.auth.domain.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum DomainErrorCode {
 
     INVALID_CREATE_USER_REQUEST_DATA("domain.INVALID_CREATE_USER_REQUEST_DATA"),
@@ -13,8 +15,4 @@ public enum DomainErrorCode {
     USER_BY_PHONE_ALREADY_EXISTS("domain.USER_BY_PHONE_ALREADY_EXISTS");
 
     private final String messageKey;
-
-    DomainErrorCode(String messageKey) {
-        this.messageKey = messageKey;
-    }
 }

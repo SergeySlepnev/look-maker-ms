@@ -1,17 +1,17 @@
 package com.sspdev.auth.infrastructure.persistence.adapter.mapper;
 
-import com.sspdev.auth.domain.model.UserIdentity;
+import com.sspdev.auth.domain.model.UserIdentityDomain;
 import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserIdentityMapper {
 
-    public UserIdentity toDomain(UserIdentityEntity jpaUserIdentity) {
+    public UserIdentityDomain toDomain(UserIdentityEntity jpaUserIdentity) {
         if (jpaUserIdentity == null) {
             return null;
         }
-        return UserIdentity.builder()
+        return UserIdentityDomain.builder()
                 .id(jpaUserIdentity.getId())
                 .email(jpaUserIdentity.getEmail())
                 .phone(jpaUserIdentity.getPhone())
@@ -20,7 +20,7 @@ public class UserIdentityMapper {
                 .build();
     }
 
-    public UserIdentityEntity toEntity(UserIdentity domainUserIdentity) {
+    public UserIdentityEntity toEntity(UserIdentityDomain domainUserIdentity) {
         if (domainUserIdentity == null) {
             return null;
         }
