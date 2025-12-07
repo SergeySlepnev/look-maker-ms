@@ -22,7 +22,7 @@ import java.util.UUID;
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(exclude = "passwordHash")
-public class UserIdentityEntity {
+public class UserIdentityJpaEntity {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)

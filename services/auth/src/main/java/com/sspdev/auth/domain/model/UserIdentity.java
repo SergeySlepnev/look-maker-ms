@@ -16,7 +16,7 @@ import java.util.UUID;
 @ToString(exclude = "passwordHash")
 @Builder
 @Getter
-public class UserIdentityDomain {
+public class UserIdentity {
 
     @EqualsAndHashCode.Include
     private final UUID id;
@@ -29,14 +29,14 @@ public class UserIdentityDomain {
 
     private final String passwordAlgo;
 
-    public static UserIdentityDomain createNew(UUID id, String email, String phone, String passwordHash, String passwordAlgo) {
+    public static UserIdentity createNew(UUID id, String email, String phone, String passwordHash, String passwordAlgo) {
         if (id == null) throw new EmptyUserIdException();
         if ((email == null || email.isBlank()) && (phone == null || phone.isBlank()))
             throw new EmptyUserContactsException();
         if (passwordHash == null || passwordHash.isBlank())
             throw new EmptyPasswordException();
 
-        return UserIdentityDomain.builder()
+        return UserIdentity.builder()
                 .id(id)
                 .email(email)
                 .phone(phone)
