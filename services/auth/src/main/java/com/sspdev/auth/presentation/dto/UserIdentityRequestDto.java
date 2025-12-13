@@ -21,5 +21,5 @@ public record UserIdentityRequestDto(
 
         @NotBlank(message = "{error.password.must_not_be_null}")
         @Size(min = 6, max = 128, message = "{error.password.min_max.length}")
-        String password) {
+        String rawPassword) {
 }

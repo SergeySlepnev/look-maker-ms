@@ -3,6 +3,7 @@ package com.sspdev.auth.unit;
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.domain.port.in.RegisterUserCommand;
 import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
+import com.sspdev.auth.presentation.dto.UserIdentityRequestDto;
 import lombok.experimental.UtilityClass;
 
 import java.util.UUID;
@@ -39,5 +40,17 @@ public class TestDataUtil {
                 .phone("8-925-869-96-98")
                 .rawPassword("dummyPassword")
                 .build();
+    }
+
+    public static UserIdentityRequestDto getValidUserIdentityRequestDto() {
+        return UserIdentityRequestDto.builder()
+                .email("test_user@gmail.com")
+                .phone("8-925-869-96-98")
+                .rawPassword("dummyPassword")
+                .build();
+    }
+
+    public static UserIdentityRequestDto getUserIdentityRequestDtoWithNullFields() {
+        return UserIdentityRequestDto.builder().build();
     }
 }
