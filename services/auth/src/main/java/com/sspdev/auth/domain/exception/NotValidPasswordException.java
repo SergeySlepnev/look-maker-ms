@@ -3,10 +3,10 @@ package com.sspdev.auth.domain.exception;
 public class NotValidPasswordException extends DomainException {
 
     public NotValidPasswordException() {
-        super(DomainErrorCode.INVALID_PASSWORD);
+        super(DomainExceptionCode.INVALID_PASSWORD);
     }
 
-    public NotValidPasswordException(DomainErrorCode errorCode) {
+    public NotValidPasswordException(DomainExceptionCode errorCode) {
         super(errorCode);
     }
 }

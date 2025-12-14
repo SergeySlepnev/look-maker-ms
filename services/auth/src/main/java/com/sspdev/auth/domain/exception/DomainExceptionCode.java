@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum DomainErrorCode {
+public enum DomainExceptionCode {
 
     INVALID_CREATE_USER_REQUEST_DATA("domain.INVALID_CREATE_USER_REQUEST_DATA"),
     INVALID_ID("domain.INVALID_ID"),

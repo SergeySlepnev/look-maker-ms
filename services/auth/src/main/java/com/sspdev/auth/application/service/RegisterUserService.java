@@ -1,6 +1,6 @@
 package com.sspdev.auth.application.service;
 
-import com.sspdev.auth.domain.exception.DomainErrorCode;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.DomainException;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
@@ -61,7 +61,7 @@ public class RegisterUserService implements RegisterUserUseCase {
             if (UNIQUE_PHONE_CONSTRAINT_NAME.equals(constraintName) && phone != null) {
                 throw new UserByPhoneAlreadyExistsException(phone);
             } else {
-                throw new DomainException(DomainErrorCode.INVALID_CREATE_USER_REQUEST_DATA);
+                throw new DomainException(DomainExceptionCode.INVALID_CREATE_USER_REQUEST_DATA);
             }
         }
     }

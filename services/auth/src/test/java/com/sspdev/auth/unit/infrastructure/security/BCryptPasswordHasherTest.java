@@ -1,6 +1,6 @@
 package com.sspdev.auth.unit.infrastructure.security;
 
-import com.sspdev.auth.domain.exception.DomainErrorCode;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.NotValidPasswordException;
 import com.sspdev.auth.infrastructure.security.BCryptPasswordHasher;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,14 +35,14 @@ public class BCryptPasswordHasherTest {
         var blankRawPassword = "";
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.hash(blankRawPassword));
         var errorCode = notValidPasswordException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD);
     }
 
     @Test
     void hash_shouldThrowNotValidPasswordExceptionWithNull_whenRawPasswordNull() {
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.hash(null));
         var errorCode = notValidPasswordException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD);
     }
 
     @Test
@@ -61,7 +61,7 @@ public class BCryptPasswordHasherTest {
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.verify(null, validHashedPassword));
         var errorCode = notValidPasswordException.getErrorCode();
 
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD_NULL);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD_NULL);
     }
 
     @Test
@@ -70,7 +70,7 @@ public class BCryptPasswordHasherTest {
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.verify(validRawPassword, null));
         var errorCode = notValidPasswordException.getErrorCode();
 
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD_NULL);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD_NULL);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class BCryptPasswordHasherTest {
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.verify(blankRawPassword, validHashedPassword));
         var errorCode = notValidPasswordException.getErrorCode();
 
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD_BLANK);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD_BLANK);
     }
 
     @Test
@@ -90,7 +90,7 @@ public class BCryptPasswordHasherTest {
         var notValidPasswordException = assertThrows(NotValidPasswordException.class, () -> passwordHasher.verify(validRawPassword, blankHashedPassword));
         var errorCode = notValidPasswordException.getErrorCode();
 
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_PASSWORD_BLANK);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_PASSWORD_BLANK);
     }
 
     @Test

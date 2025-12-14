@@ -1,7 +1,7 @@
 package com.sspdev.auth.unit.application.service;
 
 import com.sspdev.auth.application.service.RegisterUserService;
-import com.sspdev.auth.domain.exception.DomainErrorCode;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.DomainException;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
@@ -102,7 +102,7 @@ public class RegisterUserServiceTest {
         var emailAlreadyExistsException = assertThrows(UserByEmailAlreadyExistsException.class, () -> registerUserService.register(validRegisterUserCommand));
 
         var errorCode = emailAlreadyExistsException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.USER_BY_EMAIL_ALREADY_EXISTS);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.USER_BY_EMAIL_ALREADY_EXISTS);
     }
 
     @Test
@@ -116,7 +116,7 @@ public class RegisterUserServiceTest {
 
         var phoneAlreadyExistsException = assertThrows(UserByPhoneAlreadyExistsException.class, () -> registerUserService.register(validRegisterUserCommand));
         var errorCode = phoneAlreadyExistsException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.USER_BY_PHONE_ALREADY_EXISTS);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.USER_BY_PHONE_ALREADY_EXISTS);
     }
 
     @Test
@@ -239,7 +239,7 @@ public class RegisterUserServiceTest {
 
         var domainException = assertThrows(DomainException.class, () -> registerUserService.register(registerUserCommand));
         var errorCode = domainException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_CREATE_USER_REQUEST_DATA);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_CREATE_USER_REQUEST_DATA);
     }
 
     @Test
@@ -254,6 +254,6 @@ public class RegisterUserServiceTest {
 
         var domainException = assertThrows(DomainException.class, () -> registerUserService.register(registerUserCommand));
         var errorCode = domainException.getErrorCode();
-        assertThat(errorCode).isEqualTo(DomainErrorCode.INVALID_CREATE_USER_REQUEST_DATA);
+        assertThat(errorCode).isEqualTo(DomainExceptionCode.INVALID_CREATE_USER_REQUEST_DATA);
     }
 }
