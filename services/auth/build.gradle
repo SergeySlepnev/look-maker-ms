@@ -6,6 +6,16 @@ description = 'auth'
 
 ext {
     jjwtVersion = "0.13.0"
+    testContainersVersion = "1.21.3"
+    xstreamVersion = "1.4.21"
+    commonsVersion = "1.26.0"
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force "com.thoughtworks.xstream:xstream:${xstreamVersion}"
+        force "org.apache.commons:commons-compress:${commonsVersion}"
+    }
 }
 
 dependencies {
@@ -26,6 +36,7 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
