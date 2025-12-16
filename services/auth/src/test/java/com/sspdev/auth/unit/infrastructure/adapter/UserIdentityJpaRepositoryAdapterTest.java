@@ -3,7 +3,7 @@ package com.sspdev.auth.unit.infrastructure.adapter;
 import com.sspdev.auth.infrastructure.persistence.adapter.UserIdentityJpaRepositoryAdapter;
 import com.sspdev.auth.infrastructure.persistence.mapper.UserIdentityJpaMapper;
 import com.sspdev.auth.infrastructure.persistence.repository.UserIdentityEntityRepository;
-import com.sspdev.auth.unit.TestDataUtil;
+import com.sspdev.auth.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

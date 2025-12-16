@@ -9,7 +9,7 @@ import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.domain.port.in.RegisterUserResponse;
 import com.sspdev.auth.domain.port.out.PasswordHasher;
 import com.sspdev.auth.domain.port.out.UserIdentityRepository;
-import com.sspdev.auth.unit.TestDataUtil;
+import com.sspdev.auth.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.Test;

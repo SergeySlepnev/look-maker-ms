@@ -1,7 +1,7 @@
 package com.sspdev.auth.unit.presentation.mapper;
 
 import com.sspdev.auth.presentation.mapper.UserIdentityRequestMapper;
-import com.sspdev.auth.unit.TestDataUtil;
+import com.sspdev.auth.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.Test;
