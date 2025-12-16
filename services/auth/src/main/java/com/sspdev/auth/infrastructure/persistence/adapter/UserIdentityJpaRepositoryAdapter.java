@@ -31,7 +31,7 @@ public class UserIdentityJpaRepositoryAdapter implements UserIdentityRepository 
     @Override
     public UserIdentity save(UserIdentity domainIdentity) {
         var jpaEntity = userIdentityJpaMapper.toEntity(domainIdentity);
-        var savedJpaEntity = userJpaRepository.save(jpaEntity);
+        var savedJpaEntity = userJpaRepository.saveAndFlush(jpaEntity);
         return userIdentityJpaMapper.toDomain(savedJpaEntity);
     }
 }
