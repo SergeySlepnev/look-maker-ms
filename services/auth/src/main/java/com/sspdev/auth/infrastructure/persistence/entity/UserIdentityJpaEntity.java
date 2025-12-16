@@ -46,5 +46,8 @@ public class UserIdentityJpaEntity {
         if (id == null) {
             id = UUID.randomUUID();
         }
+        if (passwordAlgo == null) {
+            passwordAlgo = "bcrypt";
+        }
     }
 }
