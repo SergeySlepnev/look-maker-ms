@@ -79,7 +79,7 @@ class UserIdentityJpaRepositoryAdapterTest {
         var jpaEntity = TestDataUtil.getUserIdentityJpaEntity();
 
         when(userIdentityJpaMapper.toEntity(domain)).thenReturn(jpaEntity);
-        when(userJpaRepository.save(jpaEntity)).thenReturn(jpaEntity);
+        when(userJpaRepository.saveAndFlush(jpaEntity)).thenReturn(jpaEntity);
         when(userIdentityJpaMapper.toDomain(jpaEntity)).thenReturn(domain);
 
         var actualResult = jpaRepositoryAdapter.save(domain);
