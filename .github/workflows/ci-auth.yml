@@ -43,6 +43,12 @@ jobs:
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
 
+      - name: Build and run unit tests for auth service
+        run: ./gradlew :services:auth:test
+
+      - name: Build and run integration test for auth service
+        run: ./gradlew services:auth:integrationTest
+
       - name: Start postgres_auth_db service
         run: docker compose -f compose.yml up -d postgres_auth_db
 
