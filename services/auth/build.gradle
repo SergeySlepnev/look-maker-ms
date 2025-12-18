@@ -17,8 +17,8 @@ configurations.configureEach {
         force "org.apache.commons:commons-compress:${commonsVersion}"
     }
 }
-def integrationTestJavaDir = 'src/test/java/com/sspdev/auth/integration'
-def integrationTestResourcesDir = 'src/test/resources'
+def integrationTestJavaDir = 'src/integrationTest/java'
+def integrationTestResourcesDir = 'src/integrationTest/resources'
 
 sourceSets {
     integrationTest {
