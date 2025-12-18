@@ -1,23 +1,21 @@
 package com.sspdev.auth.setup;
 
 import org.jetbrains.annotations.NotNull;
-import org.junit.jupiter.api.BeforeAll;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Sql("/sql/testData.sql")
+@Testcontainers
 public abstract class PostgresTestContainerConfiguration {
 
     public static final String POSTGRES_IMAGE_NAME = "postgres:18.1";
 
+    @Container
     private static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>(POSTGRES_IMAGE_NAME);
-
-    @BeforeAll
-    static void startContainer() {
-        CONTAINER.start();
-    }
 
     @DynamicPropertySource
     static void setPostgresProperties(@NotNull DynamicPropertyRegistry properties) {
