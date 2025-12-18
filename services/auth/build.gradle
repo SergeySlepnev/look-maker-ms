@@ -17,6 +17,35 @@ configurations.configureEach {
         force "org.apache.commons:commons-compress:${commonsVersion}"
     }
 }
+def integrationTestJavaDir = 'src/test/java/com/sspdev/auth/integration'
+def integrationTestResourcesDir = 'src/test/resources'
+
+sourceSets {
+    integrationTest {
+        java.srcDirs = [integrationTestJavaDir]
+        resources.srcDirs = [integrationTestResourcesDir]
+        compileClasspath += sourceSets.main.output + configurations.integrationTestRuntimeClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+def integrationTestTask = tasks.register("integrationTest", Test) {
+    description = 'Runs the integration tests with Testcontainers.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    mustRunAfter tasks.named("test")
+    useJUnitPlatform()
+}
+
+tasks.named("check") {
+    dependsOn integrationTestTask
+}
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config'
@@ -38,8 +67,15 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    integrationTestImplementation sourceSets.test.output
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+    testLogging { events "PASSED", "FAILED", "SKIPPED" }
+    exclude '**/integration/**'
+}
+
+tasks.named('integrationTest') {
+    testLogging { events "PASSED", "FAILED", "SKIPPED" }
 }
