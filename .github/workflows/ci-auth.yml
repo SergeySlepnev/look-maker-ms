@@ -23,7 +23,16 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-          cache: 'gradle'
+
+      - name: Cache Gradle modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper/
+          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile', 'services/auth/build.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
