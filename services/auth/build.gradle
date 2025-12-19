@@ -77,5 +77,11 @@ tasks.named('test') {
 }
 
 tasks.named('integrationTest') {
-    testLogging { events "PASSED", "FAILED", "SKIPPED" }
+    testLogging {
+        showStandardStream: true
+        events "PASSED", "FAILED", "SKIPPED"
+        exceptionFormat: "FULL"
+    }
+
+    systemProrerty 'spring.profiles.active', 'test'
 }
