@@ -39,5 +39,24 @@ jobs:
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
 
+      - name: Enable verbose logs for Testcontainers and Liquibase
+        run: |
+          echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
+          echo "LOG_LEVEL_TESTCONTAINERS=DEBUG" >> $GITHUB_ENV  
+
       - name: Build and run test
         run: ./gradlew :services:auth:clean :services:auth:build
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: auth-integration-test-reports
+          path: services/auth/build/reports/tests/integrationTest
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: auth-integration-test-results
+          path: services/auth/build/test-results/integrationTest
