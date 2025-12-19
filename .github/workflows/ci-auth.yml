@@ -49,20 +49,5 @@ jobs:
       - name: Build and run integration test for auth service
         run: ./gradlew services:auth:integrationTest
 
-      - name: Start postgres_auth_db service
-        run: docker compose -f compose.yml up -d postgres_auth_db
-
-      - name: Wait for Postgres to be ready
-        run: |
-          for i in {1..30}; do
-            docker exec auth_db pg_isready -U sspdev -d auth_db >/dev/null 2>&1 && break
-            echo "Waiting for Postgres..."
-            sleep 2
-          done
-
       - name: Build and run unit tests for auth module
         run: ./gradlew :services:auth:clean :services:auth:build
-
-      - name: Shutdown postgres_auth_db service
-        if: always()
-        run: docker compose -f compose.yml down
