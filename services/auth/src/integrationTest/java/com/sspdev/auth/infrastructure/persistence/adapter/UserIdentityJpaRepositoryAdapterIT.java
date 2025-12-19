@@ -1,8 +1,8 @@
 package com.sspdev.auth.infrastructure.persistence.adapter;
 
-import com.sspdev.auth.testutil.TestDataUtil;
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.setup.IntegrationTestBase;
+import com.sspdev.auth.testutil.IntegrationTestDataUtil;
 import lombok.RequiredArgsConstructor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -61,7 +61,7 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldSaveAndReturnDomain_when2InputDomainValid() {
-        var validDomainModel = TestDataUtil.getUserIdentityDomainModel();
+        var validDomainModel = IntegrationTestDataUtil.getUserIdentityDomainModel();
         var savedUserIdentity = jpaRepositoryAdapter.save(validDomainModel);
 
         assertThat(savedUserIdentity).isNotNull();
@@ -70,7 +70,7 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldSaveSetIdAndReturnDomain_whenIdNull() {
-        var withNullId = TestDataUtil.getUserIdentityDomainModelWithNullId();
+        var withNullId = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullId();
         var savedUserIdentity = jpaRepositoryAdapter.save(withNullId);
 
         assertThat(savedUserIdentity.getId()).isNotNull().isExactlyInstanceOf(UUID.class);
@@ -78,7 +78,7 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldSaveAndReturnDomain_whenEmailNull() {
-        var withNullEmail = TestDataUtil.getUserIdentityDomainModelWithNullEmail();
+        var withNullEmail = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullEmail();
         var savedUserIdentity = jpaRepositoryAdapter.save(withNullEmail);
 
         assertThat(savedUserIdentity).isNotNull().usingRecursiveComparison().isEqualTo(withNullEmail);
@@ -86,7 +86,7 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldTSaveAndReturnDomain_whenPhoneNull() {
-        var withNullPhone = TestDataUtil.getUserIdentityDomainModelWithNullPhone();
+        var withNullPhone = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullPhone();
         var savedUserIdentity = jpaRepositoryAdapter.save(withNullPhone);
 
         assertThat(savedUserIdentity).isNotNull().usingRecursiveComparison().isEqualTo(withNullPhone);
@@ -94,21 +94,21 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldThrowDataIntegrityViolationException_whenEmailAndPhoneNull() {
-        var withNullEmailAndPhone = TestDataUtil.getUserIdentityDomainModelWithNullPassword();
+        var withNullEmailAndPhone = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullPassword();
 
         assertThrows(DataIntegrityViolationException.class, () -> jpaRepositoryAdapter.save(withNullEmailAndPhone));
     }
 
     @Test
     void save_shouldThrowDataIntegrityViolationException_whenPasswordNull() {
-        var withNullPassword = TestDataUtil.getUserIdentityDomainModelWithNullPassword();
+        var withNullPassword = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullPassword();
 
         assertThrows(DataIntegrityViolationException.class, () -> jpaRepositoryAdapter.save(withNullPassword));
     }
 
     @Test
     void save_shouldSaveAndSetDefaultPasswordAlgo_whenAlgoNull() {
-        var withNullPasswordAlgo = TestDataUtil.getUserIdentityDomainModelWithNullPasswordAlgo();
+        var withNullPasswordAlgo = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullPasswordAlgo();
         var savedUserIdentity = jpaRepositoryAdapter.save(withNullPasswordAlgo);
 
         assertThat(savedUserIdentity.getPasswordAlgo()).isEqualTo("bcrypt");
@@ -116,7 +116,7 @@ class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {
 
     @Test
     void save_shouldSaveAndSetDefaultPasswordAlgo_whenAlgoNull_withinSameTransaction() {
-        var withNullPasswordAlgo = TestDataUtil.getUserIdentityDomainModelWithNullPasswordAlgo();
+        var withNullPasswordAlgo = IntegrationTestDataUtil.getUserIdentityDomainModelWithNullPasswordAlgo();
 
         jpaRepositoryAdapter.save(withNullPasswordAlgo);
         var foundUserIdentity = jpaRepositoryAdapter.findByEmail(withNullPasswordAlgo.getEmail());
