@@ -82,6 +82,4 @@ tasks.named('integrationTest') {
         events "PASSED", "FAILED", "SKIPPED"
         exceptionFormat "FULL"
     }
-
-    systemProrerty 'spring.profiles.active', 'test'
 }
