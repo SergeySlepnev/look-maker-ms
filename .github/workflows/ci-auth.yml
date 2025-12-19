@@ -49,14 +49,14 @@ jobs:
 
       - name: Upload test reports
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: auth-integration-test-reports
           path: services/auth/build/reports/tests/integrationTest
 
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: auth-integration-test-results
           path: services/auth/build/test-results/integrationTest
