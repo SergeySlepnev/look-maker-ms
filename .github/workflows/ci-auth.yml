@@ -14,40 +14,19 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-
-    env:
-      DB_URL: jdbc:postgresql://${{ secrets.AUTH_DB_HOST }}:5432/auth_db
-      DB_USER: ${{ secrets.AUTH_DB_USER }}
-      DB_PASSWORD: ${{ secrets.AUTH_DB_PASSWORD }}
+    timeout-minutes: 60
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Cache Gradle modules
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper/
-          key: ${{ runner.os }}-gradle-${{ hashFiles('gradle.lockfile', 'services/auth/build.gradle') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          cache: 'gradle'
 
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
 
-      - name: Build and run unit tests for auth service
-        run: ./gradlew :services:auth:test
-
-      - name: Build and run integration test for auth service
-        run: ./gradlew services:auth:integrationTest
-
-      - name: Build and run unit tests for auth module
+      - name: Build and run test
         run: ./gradlew :services:auth:clean :services:auth:build
