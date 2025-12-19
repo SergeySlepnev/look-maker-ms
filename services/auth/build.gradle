@@ -17,7 +17,7 @@ configurations.configureEach {
         force "org.apache.commons:commons-compress:${commonsVersion}"
     }
 }
-def integrationTestJavaDir = ['src/integrationTest/java', 'src/test/java/com/sspdev/auth/testutil']
+def integrationTestJavaDir = 'src/integrationTest/java'
 def integrationTestResourcesDir = 'src/integrationTest/resources'
 
 sourceSets {
@@ -74,7 +74,6 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
     testLogging { events "PASSED", "FAILED", "SKIPPED" }
-    exclude '**/integration/**'
 }
 
 tasks.named('integrationTest') {
