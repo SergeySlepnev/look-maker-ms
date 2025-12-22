@@ -56,7 +56,7 @@ class UserIdentityJpaRepositoryAdapterTest {
         var jpaEntity = TestDataUtil.getUserIdentityJpaEntity();
         var domainModel = TestDataUtil.getUserIdentityDomainModel();
 
-        when(userJpaRepository.findByEmail(EXISTING_PHONE)).thenReturn(Optional.of(jpaEntity));
+        when(userJpaRepository.findByPhone(EXISTING_PHONE)).thenReturn(Optional.of(jpaEntity));
         when(userIdentityJpaMapper.toDomain(jpaEntity)).thenReturn(domainModel);
 
         var actualUserIdentity = jpaRepositoryAdapter.findByPhone(EXISTING_PHONE);
@@ -66,7 +66,7 @@ class UserIdentityJpaRepositoryAdapterTest {
 
     @Test
     void findByPhone_shouldReturnEmpty_whenPhoneNotExist() {
-        when(userJpaRepository.findByEmail(NOT_EXISTING_PHONE)).thenReturn(Optional.empty());
+        when(userJpaRepository.findByPhone(NOT_EXISTING_PHONE)).thenReturn(Optional.empty());
 
         var actualUserIdentity = jpaRepositoryAdapter.findByPhone(NOT_EXISTING_PHONE);
 
