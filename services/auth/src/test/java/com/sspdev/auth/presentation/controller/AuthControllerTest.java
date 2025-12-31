@@ -67,4 +67,17 @@ class AuthControllerTest {
                 .andExpect(jsonPath("$.id").value(userResponse.id()))
                 .andExpect(jsonPath("$.message").value("Some message"));
     }
+
+    @Test
+    void post_register_shouldReturnBadRequest_whenRequestDtoNotValid() throws Exception {
+        var requestDto = TestDataUtil.getUserIdentityRequestDtoWithNullFields();
+
+        var requestDtoAsString = objectMapper.writeValueAsString(requestDto);
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestDtoAsString)
+                        .with(csrf()))
+                .andExpect(status().isBadRequest());
+    }
 }
