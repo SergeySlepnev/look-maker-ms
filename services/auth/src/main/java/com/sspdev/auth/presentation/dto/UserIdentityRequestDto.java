@@ -15,8 +15,7 @@ public record UserIdentityRequestDto(
         String email,
 
         @NotBlank(message = "{error.phone.must_not_be_null}")
-        @Pattern(regexp = "^(8|\\\\+7)?[\\\\s.-]?(\\\\d{3})[\\\\s.-]?(\\\\d{3})[\\\\s.-]?(\\\\d{2})[\\\\s.-]?(\\\\d{2})$",
-                message = "{error.phone.must_be_like_pattern}")
+        @Pattern(regexp = ValidationConstants.PHONE_NUMBER_REGEX, message = "{error.phone.must_be_like_pattern}")
         String phone,
 
         @NotBlank(message = "{error.password.must_not_be_null}")

@@ -1,8 +1,11 @@
 package com.sspdev.auth.presentation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
+import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.port.in.RegisterUserUseCase;
 import com.sspdev.auth.domain.port.out.MessageResolver;
+import com.sspdev.auth.presentation.exception.ApiExceptionHandler;
 import com.sspdev.auth.presentation.mapper.UserIdentityRequestMapper;
 import com.sspdev.auth.testutil.TestDataUtil;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +45,7 @@ class AuthControllerTest {
     @BeforeEach
     void init() {
         mockMvc = MockMvcBuilders.standaloneSetup(authController)
+                .setControllerAdvice(new ApiExceptionHandler(messageResolver))
                 .alwaysDo(print())
                 .build();
         objectMapper = new ObjectMapper();
@@ -64,7 +68,7 @@ class AuthControllerTest {
                         .content(requestDtoAsString)
                         .with(csrf()))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id").value(userResponse.id()))
+                .andExpect(jsonPath("$.id").value(userResponse.id().toString()))
                 .andExpect(jsonPath("$.message").value("Some message"));
     }
 
@@ -79,5 +83,21 @@ class AuthControllerTest {
                         .content(requestDtoAsString)
                         .with(csrf()))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void post_register_shouldThrowUserByEmailExist_whenEmailInDb() throws Exception {
+        var requestDto = TestDataUtil.getValidUserIdentityRequestDto();
+        var userCommand = TestDataUtil.getValidRegisterUserCommand();
+
+        when(requestMapper.toRegisterUserCommand(requestDto)).thenReturn(userCommand);
+        when(registerUserUseCase.register(userCommand)).thenThrow(new UserByEmailAlreadyExistsException(requestDto.email()));
+
+        var requestAsString = objectMapper.writeValueAsString(requestDto);
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestAsString))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_EMAIL_ALREADY_EXISTS.name()));
     }
 }
