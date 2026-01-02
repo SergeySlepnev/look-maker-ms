@@ -3,6 +3,7 @@ package com.sspdev.auth.presentation.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
+import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
 import com.sspdev.auth.domain.port.in.RegisterUserUseCase;
 import com.sspdev.auth.domain.port.out.MessageResolver;
 import com.sspdev.auth.presentation.exception.ApiExceptionHandler;
@@ -99,5 +100,21 @@ class AuthControllerTest {
                         .content(requestAsString))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_EMAIL_ALREADY_EXISTS.name()));
+    }
+
+    @Test
+    void post_register_shouldThrowUserByPhoneExist_whenPhoneInDb() throws Exception {
+        var requestDto = TestDataUtil.getValidUserIdentityRequestDto();
+        var userCommand = TestDataUtil.getValidRegisterUserCommand();
+
+        when(requestMapper.toRegisterUserCommand(requestDto)).thenReturn(userCommand);
+        when(registerUserUseCase.register(userCommand)).thenThrow(new UserByPhoneAlreadyExistsException(requestDto.email()));
+
+        var requestAsString = objectMapper.writeValueAsString(requestDto);
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestAsString))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_PHONE_ALREADY_EXISTS.name()));
     }
 }
