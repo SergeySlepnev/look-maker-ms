@@ -3,6 +3,7 @@ package com.sspdev.auth.infrastructure.localization;
 import com.sspdev.auth.domain.port.out.MessageResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Locale;
@@ -15,6 +16,7 @@ public class SpringMessageResolver implements MessageResolver {
 
     @Override
     public String resolve(String key, Object[] args, Locale locale) {
-        return messageSource.getMessage(key, args, locale);
+        Locale effectiveLocale = locale != null ? locale : LocaleContextHolder.getLocale();
+        return messageSource.getMessage(key, args, effectiveLocale);
     }
 }
