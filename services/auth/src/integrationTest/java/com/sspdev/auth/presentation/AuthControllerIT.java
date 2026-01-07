@@ -40,6 +40,21 @@ public class AuthControllerIT extends IntegrationTestBase {
     }
 
     @Test
+    void post_register_shouldReturnUserIdentityResponseDto_whenRequestDtoValid_withEnLocale() throws Exception {
+        var requestDto = IntegrationTestDataUtil.getValidUserIdentityRequestDto();
+
+        var requestDtoAsString = objectMapper.writeValueAsString(requestDto);
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestDtoAsString)
+                        .with(csrf())
+                        .header("Accept-Language", "en"))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNotEmpty());
+    }
+
+    @Test
     void post_register_shouldThrowUserByEmailExist_whenEmailInDb() throws Exception {
         var requestDtoWithExistingEmail = UserIdentityRequestDto.builder()
                 .email(EXISTING_EMAIL)
@@ -57,6 +72,24 @@ public class AuthControllerIT extends IntegrationTestBase {
     }
 
     @Test
+    void post_register_shouldThrowUserByEmailExist_whenEmailInDb_withEnLocale() throws Exception {
+        var requestDtoWithExistingEmail = UserIdentityRequestDto.builder()
+                .email(EXISTING_EMAIL)
+                .phone("8-925-869-96-98")
+                .rawPassword("dummyPassword")
+                .build();
+
+        var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingEmail);
+
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestAsString)
+                        .header("Accept-language", "en"))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_EMAIL_ALREADY_EXISTS.name()));
+    }
+
+    @Test
     void post_register_shouldThrowUserByPhoneExist_whenPhoneInDb() throws Exception {
         var requestDtoWithExistingPhone = UserIdentityRequestDto.builder()
                 .email("test@gmail.com")
@@ -68,6 +101,23 @@ public class AuthControllerIT extends IntegrationTestBase {
         mockMvc.perform(post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestAsString))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_PHONE_ALREADY_EXISTS.name()));
+    }
+
+    @Test
+    void post_register_shouldThrowUserByPhoneExist_whenPhoneInDb_withEnLocale() throws Exception {
+        var requestDtoWithExistingPhone = UserIdentityRequestDto.builder()
+                .email("test@gmail.com")
+                .phone(EXISTING_PHONE)
+                .rawPassword("dummyPassword")
+                .build();
+
+        var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingPhone);
+        mockMvc.perform(post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestAsString)
+                        .header("Accept-language", "en"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.errorCode").value(DomainExceptionCode.USER_BY_PHONE_ALREADY_EXISTS.name()));
     }
