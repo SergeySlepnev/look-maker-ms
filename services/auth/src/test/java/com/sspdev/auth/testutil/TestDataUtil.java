@@ -2,6 +2,7 @@ package com.sspdev.auth.testutil;
 
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.domain.port.in.RegisterUserCommand;
+import com.sspdev.auth.domain.port.in.RegisterUserResponse;
 import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
 import com.sspdev.auth.presentation.dto.UserIdentityRequestDto;
 import lombok.experimental.UtilityClass;
@@ -96,5 +97,9 @@ public class TestDataUtil {
 
     public static UserIdentityRequestDto getUserIdentityRequestDtoWithNullFields() {
         return UserIdentityRequestDto.builder().build();
+    }
+
+    public static RegisterUserResponse getRegisterUserResponse() {
+        return new RegisterUserResponse(USER_IDENTITY_ID);
     }
 }
