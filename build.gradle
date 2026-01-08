@@ -8,14 +8,14 @@ group = 'com.sspdev'
 version = '0.0.1-SNAPSHOT'
 description = 'look-maker-ms'
 
-ext {
-    springCloudVersion = '2025.0.0'
-}
-
 allprojects {
     repositories {
         mavenCentral()
     }
+}
+
+ext {
+    springCloudVersion = '2025.0.0'
 }
 
 subprojects {

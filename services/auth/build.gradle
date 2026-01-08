@@ -1,11 +1,49 @@
 plugins {
     id 'io.freefair.lombok' version '9.1.0'
+    id 'jacoco'
 }
 
 description = 'auth'
 
 ext {
     jjwtVersion = "0.13.0"
+    testContainersVersion = "1.21.3"
+    xstreamVersion = "1.4.21"
+    commonsVersion = "1.26.0"
+    jacocoToolVersion = "0.8.14"
+
+    excludedClasses = [
+            '**/AuthApplication.class',
+            '**/port/**',
+            '**/configuration/**',
+            '**/repository/**',
+            '**/dto/**',
+            '**/entity/**'
+    ]
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        force "com.thoughtworks.xstream:xstream:${xstreamVersion}"
+        force "org.apache.commons:commons-compress:${commonsVersion}"
+    }
+}
+
+def integrationTestJavaDir = 'src/integrationTest/java'
+def integrationTestResourcesDir = 'src/integrationTest/resources'
+
+sourceSets {
+    integrationTest {
+        java.srcDirs = [integrationTestJavaDir]
+        resources.srcDirs = [integrationTestResourcesDir]
+        compileClasspath += sourceSets.main.output + configurations.integrationTestRuntimeClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 dependencies {
@@ -18,9 +56,122 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt-impl:${jjwtVersion}"
     implementation "io.jsonwebtoken:jjwt-jackson:${jjwtVersion}"
     implementation 'org.liquibase:liquibase-core'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly 'org.projectlombok:lombok'
 
     runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation "org.testcontainers:postgresql:${testContainersVersion}"
+    testImplementation "org.testcontainers:junit-jupiter:${testContainersVersion}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+jacoco {
+    toolVersion = "${jacocoToolVersion}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging { events "PASSED", "FAILED", "SKIPPED" }
+    jacoco {
+        destinationFile = layout.buildDirectory.file("jacoco/test.exec").get().asFile
+    }
+}
+
+tasks.register("integrationTest", Test) {
+    description = 'Runs the integration tests with Testcontainers.'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    mustRunAfter tasks.named("test")
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+        events "PASSED", "FAILED", "SKIPPED"
+        exceptionFormat "FULL"
+    }
+    jacoco {
+        destinationFile = layout.buildDirectory.file("jacoco/integrationTest.exec").get().asFile
+    }
+}
+
+tasks.named('jacocoTestReport', JacocoReport) {
+    dependsOn tasks.test
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    sourceDirectories.setFrom(files(sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(
+            files(sourceSets.main.output).asFileTree.matching {
+                exclude excludedClasses
+            }
+    )
+    executionData.setFrom(layout.buildDirectory.file("jacoco/test.exec"))
+}
+
+tasks.register('jacocoIntegrationTestReport', JacocoReport) {
+    dependsOn tasks.integrationTest
+    reports {
+        xml.required = true
+        html.required = true
+    }
+    sourceDirectories.setFrom(files(sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(
+            files(sourceSets.main.output).asFileTree.matching {
+                exclude excludedClasses
+            }
+    )
+    executionData.setFrom(layout.buildDirectory.file("jacoco/integrationTest.exec"))
+}
+
+tasks.named('jacocoTestCoverageVerification', JacocoCoverageVerification) {
+    dependsOn tasks.test
+    sourceDirectories.setFrom(files(sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(
+            files(sourceSets.main.output).asFileTree.matching {
+                exclude excludedClasses
+            }
+    )
+    executionData.setFrom(layout.buildDirectory.file("jacoco/test.exec"))
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.30
+            }
+        }
+    }
+}
+
+tasks.register('jacocoIntegrationCoverageVerification', JacocoCoverageVerification) {
+    dependsOn tasks.integrationTest
+    sourceDirectories.setFrom(files(sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(
+            files(sourceSets.main.output).asFileTree.matching {
+                exclude excludedClasses
+            }
+    )
+    executionData.setFrom(layout.buildDirectory.file("jacoco/integrationTest.exec"))
+
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                value = 'COVEREDRATIO'
+                minimum = 0.30
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn 'jacocoTestReport', 'jacocoIntegrationTestReport'
+    dependsOn 'jacocoTestCoverageVerification', 'jacocoIntegrationCoverageVerification'
 }
