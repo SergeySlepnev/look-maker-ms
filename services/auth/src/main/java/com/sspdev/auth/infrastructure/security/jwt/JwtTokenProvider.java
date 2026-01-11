@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Component
 public class JwtTokenProvider {
@@ -25,9 +28,11 @@ public class JwtTokenProvider {
         this.validityInMs = validityInMs;
     }
 
-    public String generateToken(String userId, List<String> roles) {
-        Claims claims = Jwts.claims().subject(userId).build();
-        claims.put("roles", roles);
+    public String generateToken(UUID userId, Set<String> roles) {
+        Claims claims = Jwts.claims()
+                .add("roles", roles)
+                .subject(userId.toString())
+                .build();
 
         Date now = new Date();
         Date expiry = new Date(now.getTime() + validityInMs);
@@ -52,17 +57,32 @@ public class JwtTokenProvider {
         }
     }
 
-    public String getUserId(String token) {
-        return Jwts.parser().verifyWith(secretKey).build()
+    public UUID getUserId(String token) {
+        var userIdAsString = Jwts.parser().verifyWith(secretKey).build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+
+        return UUID.fromString(userIdAsString);
     }
 
     public List<String> getRoles(String token) {
-        return (List<String>) Jwts.parser().verifyWith(secretKey).build()
+        var rolesAsObject = Jwts.parser()
+                .verifyWith(secretKey)
+                .build()
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("roles");
+
+        if (rolesAsObject instanceof List<?>) {
+            @SuppressWarnings("unchecked")
+            List<Object> rawList = (List<Object>) rolesAsObject;
+            return rawList.stream()
+                    .filter(String.class::isInstance)
+                    .map(String.class::cast)
+                    .toList();
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
