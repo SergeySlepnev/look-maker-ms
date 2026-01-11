@@ -15,6 +15,7 @@ public class UserIdentityRequestMapper {
                 .email(requestDto.email())
                 .phone(requestDto.phone())
                 .rawPassword(requestDto.rawPassword())
+                .roles(requestDto.roles())
                 .build();
     }
 }
