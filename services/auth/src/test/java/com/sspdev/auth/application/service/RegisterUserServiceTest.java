@@ -60,7 +60,8 @@ public class RegisterUserServiceTest {
                     argument.getEmail(),
                     argument.getPhone(),
                     argument.getPasswordHash(),
-                    argument.getPasswordHash());
+                    argument.getPasswordHash(),
+                    argument.getRoles());
         });
 
         var actualResponseDto = registerUserService.register(registerUserCommand);
@@ -136,7 +137,8 @@ public class RegisterUserServiceTest {
                         arg.getEmail(),
                         arg.getPhone(),
                         arg.getPasswordHash(),
-                        arg.getPasswordHash()
+                        arg.getPasswordHash(),
+                        arg.getRoles()
                 );
             } else {
                 throw new DataIntegrityViolationException("error", new Throwable("unique_user_email"));
@@ -190,7 +192,8 @@ public class RegisterUserServiceTest {
                         arg.getEmail(),
                         arg.getPhone(),
                         arg.getPasswordHash(),
-                        arg.getPasswordHash()
+                        arg.getPasswordHash(),
+                        arg.getRoles()
                 );
             } else {
                 throw new DataIntegrityViolationException("error", new Throwable("unique_user_phone"));
