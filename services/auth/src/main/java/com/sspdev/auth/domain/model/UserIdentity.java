@@ -3,12 +3,14 @@ package com.sspdev.auth.domain.model;
 import com.sspdev.auth.domain.exception.EmptyPasswordException;
 import com.sspdev.auth.domain.exception.EmptyUserContactsException;
 import com.sspdev.auth.domain.exception.EmptyUserIdException;
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -29,7 +31,9 @@ public class UserIdentity {
 
     private final String passwordAlgo;
 
-    public static UserIdentity createNew(UUID id, String email, String phone, String passwordHash, String passwordAlgo) {
+    private final Set<Role> roles;
+
+    public static UserIdentity createNew(UUID id, String email, String phone, String passwordHash, String passwordAlgo, Set<Role> roles) {
         if (id == null) throw new EmptyUserIdException();
         if ((email == null || email.isBlank()) && (phone == null || phone.isBlank()))
             throw new EmptyUserContactsException();
@@ -42,6 +46,7 @@ public class UserIdentity {
                 .phone(phone)
                 .passwordHash(passwordHash)
                 .passwordAlgo(passwordAlgo)
+                .roles(roles)
                 .build();
     }
 }

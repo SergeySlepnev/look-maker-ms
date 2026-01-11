@@ -48,9 +48,11 @@ public class UserIdentityJpaEntity {
     @Column(name = "password_algo", nullable = false)
     private String passwordAlgo;
 
+    @Builder.Default
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", schema = "auth", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role")
     Set<Role> roles = new HashSet<>();
 
     @PrePersist
