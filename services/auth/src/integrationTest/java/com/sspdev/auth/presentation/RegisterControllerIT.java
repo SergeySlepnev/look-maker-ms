@@ -20,7 +20,7 @@ import java.util.Set;
 
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-public class AuthControllerIT extends IntegrationTestBase {
+public class RegisterControllerIT extends IntegrationTestBase {
 
     public static final String EXISTING_EMAIL = "user01@example.com";
     public static final String EXISTING_PHONE = "+7 900 111 11 01";

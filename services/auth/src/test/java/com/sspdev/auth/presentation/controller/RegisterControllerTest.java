@@ -29,7 +29,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.Locale;
 
 @ExtendWith(MockitoExtension.class)
-class AuthControllerTest {
+class RegisterControllerTest {
 
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
@@ -41,11 +41,11 @@ class AuthControllerTest {
     @Mock
     private MessageResolver messageResolver;
     @InjectMocks
-    private AuthController authController;
+    private RegisterController registerController;
 
     @BeforeEach
     void init() {
-        mockMvc = MockMvcBuilders.standaloneSetup(authController)
+        mockMvc = MockMvcBuilders.standaloneSetup(registerController)
                 .setControllerAdvice(new ApiExceptionHandler(messageResolver))
                 .alwaysDo(print())
                 .build();
