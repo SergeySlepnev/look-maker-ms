@@ -1,7 +1,7 @@
 package com.sspdev.auth.presentation.exception;
 
-import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.DomainException;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.port.out.MessageResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -39,7 +39,8 @@ public class ApiExceptionHandler {
                  INVALID_PASSWORD_BLANK,
                  CONTACT_REQUIRED,
                  PASSWORD_REQUIRED,
-                 INVALID_CREATE_USER_REQUEST_DATA -> HttpStatus.BAD_REQUEST;
+                 INVALID_CREATE_USER_REQUEST_DATA,
+                 INVALID_CREDENTIALS -> HttpStatus.BAD_REQUEST;
             case USER_BY_EMAIL_ALREADY_EXISTS,
                  USER_BY_PHONE_ALREADY_EXISTS -> HttpStatus.CONFLICT;
         };
