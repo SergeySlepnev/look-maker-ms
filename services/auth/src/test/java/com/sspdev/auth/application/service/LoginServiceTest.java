@@ -72,7 +72,7 @@ public class LoginServiceTest {
                 () -> loginService.login("incorrectEmail@gmail.com", "correctPassword"));
 
         assertThat(credentialException.getErrorCode()).isEqualTo(DomainExceptionCode.INVALID_CREDENTIALS);
-        verify(userIdentityRepository, times(1)).findByEmail("wrongEmail@gmail.com");
+        verify(userIdentityRepository, times(1)).findByEmail("incorrectEmail@gmail.com");
         verifyNoInteractions(passwordEncoder, tokenProvider);
     }
 
