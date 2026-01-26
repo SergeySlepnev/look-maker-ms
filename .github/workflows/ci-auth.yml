@@ -14,7 +14,14 @@ on:
 jobs:
   build-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+
+    env:
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      AUTH_DB_USER: ${{ secrets.AUTH_DB_USER }}
+      AUTH_DB_PASSWORD: ${{ secrets.AUTH_DB_PASSWORD }}
+      AUTH_DB_HOST: ${{ secrets.AUTH_DB_HOST }}
+      SPRING_PROFILES_ACTIVE: test
+      LOG_LEVEL_TESTCONTAINERS: DEBUG
 
     steps:
       - name: Checkout
