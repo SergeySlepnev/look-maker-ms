@@ -24,11 +24,11 @@ jobs:
       LOG_LEVEL_TESTCONTAINERS: DEBUG
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -46,20 +46,24 @@ jobs:
       - name: Ensure Gradle wrapper is executable
         run: chmod +x ./gradlew
 
-      - name: Start postgres_auth_db service
-        run: docker compose -f compose.yml up -d postgres_auth_db
-
-      - name: Wait for Postgres to be ready
+      - name: Enable verbose logs for Testcontainers and Liquibase
         run: |
-          for i in {1..30}; do
-            docker exec auth_db pg_isready -U sspdev -d auth_db >/dev/null 2>&1 && break
-            echo "Waiting for Postgres..."
-            sleep 2
-          done
+          echo "SPRING_PROFILES_ACTIVE=test" >> $GITHUB_ENV
+          echo "LOG_LEVEL_TESTCONTAINERS=DEBUG" >> $GITHUB_ENV  
 
-      - name: Build and run unit tests for auth module
+      - name: Build and run test
         run: ./gradlew :services:auth:clean :services:auth:build
 
-      - name: Shutdown postgres_auth_db service
+      - name: Upload test reports
         if: always()
-        run: docker compose -f compose.yml down
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-integration-test-reports
+          path: services/auth/build/reports/tests/integrationTest
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auth-integration-test-results
+          path: services/auth/build/test-results/integrationTest

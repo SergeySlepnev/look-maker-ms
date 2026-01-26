@@ -1,0 +1,30 @@
+spring:
+
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: test
+    password: test
+
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        default_schema: auth
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/migration/db.changelog-master.yaml
+
+logging:
+  level:
+    org:
+      springframework.transaction: trace
+      hibernate.sql: trace
+      hibernate.type.descriptor.sql.BasicBinder: trace

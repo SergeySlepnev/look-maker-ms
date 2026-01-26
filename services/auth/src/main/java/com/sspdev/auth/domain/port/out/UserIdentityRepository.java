@@ -1,4 +1,4 @@
-package com.sspdev.auth.domain.repository;
+package com.sspdev.auth.domain.port.out;
 
 import com.sspdev.auth.domain.model.UserIdentity;
 
