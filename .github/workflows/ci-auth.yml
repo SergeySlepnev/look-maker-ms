@@ -16,9 +16,12 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DB_URL: jdbc:postgresql://localhost:5432/auth_db
-      DB_USER: sspdev
-      DB_PASSWORD: sspdev
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      AUTH_DB_USER: ${{ secrets.AUTH_DB_USER }}
+      AUTH_DB_PASSWORD: ${{ secrets.AUTH_DB_PASSWORD }}
+      AUTH_DB_HOST: ${{ secrets.AUTH_DB_HOST }}
+      SPRING_PROFILES_ACTIVE: test
+      LOG_LEVEL_TESTCONTAINERS: DEBUG
 
     steps:
       - name: Checkout repository
