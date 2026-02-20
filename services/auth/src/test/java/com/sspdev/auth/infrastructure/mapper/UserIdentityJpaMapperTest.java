@@ -34,6 +34,7 @@ public class UserIdentityJpaMapperTest {
                 .phone(null)
                 .passwordHash(null)
                 .passwordAlgo(null)
+                .roles(null)
                 .build();
 
         UserIdentity expectedDomainModel = UserIdentity.builder()
@@ -42,6 +43,7 @@ public class UserIdentityJpaMapperTest {
                 .phone(null)
                 .passwordHash(null)
                 .passwordAlgo(null)
+                .roles(null)
                 .build();
 
         var actualUserIdentityDomainModel = identityMapper.toDomain(entityWithNullFields);
@@ -75,6 +77,7 @@ public class UserIdentityJpaMapperTest {
                 .phone(null)
                 .passwordHash(null)
                 .passwordAlgo(null)
+                .roles(null)
                 .build();
 
         UserIdentityJpaEntity expectedJpaEntity = UserIdentityJpaEntity.builder()
@@ -83,6 +86,7 @@ public class UserIdentityJpaMapperTest {
                 .phone(null)
                 .passwordHash(null)
                 .passwordAlgo(null)
+                .roles(null)
                 .build();
 
         var actualJpaUserIdentityEntity = identityMapper.toEntity(domainModelWithNulls);

@@ -5,3 +5,9 @@ databaseChangeLog:
   - include:
       file: 002-drop-defaults-id-password_algo.sql
       relativeToChangelogFile: true
+  - include:
+      file: 003-set_unique_constraints_name.sql
+      relativeToChangelogFile: true
+  - include:
+      file: 004-add_user_roles_table.sql
+      relativeToChangelogFile: true

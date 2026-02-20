@@ -1,10 +1,14 @@
 package com.sspdev.auth.presentation.dto;
 
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
+
+import java.util.Set;
 
 @Builder
 public record UserIdentityRequestDto(
@@ -20,5 +24,8 @@ public record UserIdentityRequestDto(
 
         @NotBlank(message = "{error.password.must_not_be_null}")
         @Size(min = 6, max = 128, message = "{error.password.min_max.length}")
-        String rawPassword) {
+        String rawPassword,
+
+        @NotNull
+        Set<Role> roles) {
 }

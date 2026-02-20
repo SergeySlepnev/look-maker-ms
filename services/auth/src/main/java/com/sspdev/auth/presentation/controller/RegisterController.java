@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class RegisterController {
 
     private static final String USER_SUCCESSFULLY_CREATED_KEY = "register.user.success";
 

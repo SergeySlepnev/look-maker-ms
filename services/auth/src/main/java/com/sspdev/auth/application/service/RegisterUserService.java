@@ -1,7 +1,7 @@
 package com.sspdev.auth.application.service;
 
-import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.DomainException;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
 import com.sspdev.auth.domain.model.UserIdentity;
@@ -48,7 +48,8 @@ public class RegisterUserService implements RegisterUserUseCase {
                 email,
                 phone,
                 hashedPassword,
-                DEFAULT_HASH_ALGO);
+                DEFAULT_HASH_ALGO,
+                registerUserCommand.roles());
 
         try {
             var savedUserIdentity = userIdentityRepository.save(domain);
