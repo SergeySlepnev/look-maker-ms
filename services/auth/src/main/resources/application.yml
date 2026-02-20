@@ -4,5 +4,5 @@ spring:
   config:
     import: optional:configserver:http://localhost:8888
 jwt:
-  secret: ValidJwtSecretWOW789456132321sse54LKJOJLKDLJ9909ds0989fds09fds654987
+  secret: ${JWT_SECRET}
   validity-ms: 3600000
