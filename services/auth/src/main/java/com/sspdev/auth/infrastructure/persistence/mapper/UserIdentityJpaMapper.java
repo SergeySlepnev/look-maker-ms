@@ -17,6 +17,7 @@ public class UserIdentityJpaMapper {
                 .phone(jpaUserIdentity.getPhone())
                 .passwordHash(jpaUserIdentity.getPasswordHash())
                 .passwordAlgo(jpaUserIdentity.getPasswordAlgo())
+                .roles(jpaUserIdentity.getRoles())
                 .build();
     }
 
@@ -30,6 +31,7 @@ public class UserIdentityJpaMapper {
                 .phone(domainUserIdentity.getPhone())
                 .passwordHash(domainUserIdentity.getPasswordHash())
                 .passwordAlgo(domainUserIdentity.getPasswordAlgo())
+                .roles(domainUserIdentity.getRoles())
                 .build();
     }
 }

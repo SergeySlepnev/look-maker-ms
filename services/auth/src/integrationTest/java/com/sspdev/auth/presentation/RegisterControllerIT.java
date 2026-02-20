@@ -2,6 +2,7 @@ package com.sspdev.auth.presentation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sspdev.auth.domain.exception.DomainExceptionCode;
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import com.sspdev.auth.presentation.dto.UserIdentityRequestDto;
 import com.sspdev.auth.setup.IntegrationTestBase;
 import com.sspdev.auth.testutil.IntegrationTestDataUtil;
@@ -15,9 +16,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Set;
+
 @AutoConfigureMockMvc
 @RequiredArgsConstructor
-public class AuthControllerIT extends IntegrationTestBase {
+public class RegisterControllerIT extends IntegrationTestBase {
 
     public static final String EXISTING_EMAIL = "user01@example.com";
     public static final String EXISTING_PHONE = "+7 900 111 11 01";
@@ -60,6 +63,7 @@ public class AuthControllerIT extends IntegrationTestBase {
                 .email(EXISTING_EMAIL)
                 .phone("8-925-869-96-98")
                 .rawPassword("dummyPassword")
+                .roles(Set.of(Role.USER))
                 .build();
 
         var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingEmail);
@@ -77,6 +81,7 @@ public class AuthControllerIT extends IntegrationTestBase {
                 .email(EXISTING_EMAIL)
                 .phone("8-925-869-96-98")
                 .rawPassword("dummyPassword")
+                .roles(Set.of(Role.USER))
                 .build();
 
         var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingEmail);
@@ -95,6 +100,7 @@ public class AuthControllerIT extends IntegrationTestBase {
                 .email("test@gmail.com")
                 .phone(EXISTING_PHONE)
                 .rawPassword("dummyPassword")
+                .roles(Set.of(Role.USER))
                 .build();
 
         var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingPhone);
@@ -111,6 +117,7 @@ public class AuthControllerIT extends IntegrationTestBase {
                 .email("test@gmail.com")
                 .phone(EXISTING_PHONE)
                 .rawPassword("dummyPassword")
+                .roles(Set.of(Role.USER))
                 .build();
 
         var requestAsString = objectMapper.writeValueAsString(requestDtoWithExistingPhone);

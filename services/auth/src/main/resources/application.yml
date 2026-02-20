@@ -2,4 +2,4 @@ spring:
   application:
     name: auth
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:classpath:application-test.yml
