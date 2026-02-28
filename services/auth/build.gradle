@@ -171,6 +171,15 @@ tasks.register('jacocoIntegrationCoverageVerification', JacocoCoverageVerificati
     }
 }
 
+tasks.named('javadoc') {
+    options.encoding = 'UTF-8'
+    options.memberLevel = JavadocMemberLevel.PROTECTED
+    options.links = [
+            'https://docs.spring.io/spring-framework/docs/current/javadoc-api/',
+            'https://docs.spring.io/spring-data/commons/docs/current/api/'
+    ]
+}
+
 tasks.named('check') {
     dependsOn 'jacocoTestReport', 'jacocoIntegrationTestReport'
     dependsOn 'jacocoTestCoverageVerification', 'jacocoIntegrationCoverageVerification'
