@@ -1,5 +1,6 @@
 package com.sspdev.auth.application.service;
 
+import com.sspdev.auth.application.util.DataMasker;
 import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.InvalidCredentialException;
 import com.sspdev.auth.domain.port.out.UserIdentityRepository;
@@ -34,6 +35,8 @@ public class LoginServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private JwtTokenProvider tokenProvider;
+    @Mock
+    private DataMasker dataMasker;
     @InjectMocks
     private LoginService loginService;
     @Captor

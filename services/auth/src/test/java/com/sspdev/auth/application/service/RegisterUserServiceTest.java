@@ -1,5 +1,6 @@
 package com.sspdev.auth.application.service;
 
+import com.sspdev.auth.application.util.DataMasker;
 import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import com.sspdev.auth.domain.exception.DomainException;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
@@ -41,7 +42,8 @@ public class RegisterUserServiceTest {
     private UserIdentityRepository userIdentityRepository;
     @Mock
     private PasswordHasher passwordHasher;
-
+    @Mock
+    private DataMasker dataMasker;
     @InjectMocks
     private RegisterUserService registerUserService;
 
