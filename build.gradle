@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.7' apply false
     id 'io.spring.dependency-management' version '1.1.7' apply false
+    id 'checkstyle'
 }
 
 group = 'com.sspdev'
@@ -18,10 +19,26 @@ ext {
     springCloudVersion = '2025.0.0'
 }
 
+checkstyle {
+    toolVersion = '10.15.0'
+    configFile = file("${rootDir}/config/checkstyle/checkstyle.xml")
+}
+
+tasks.withType(Checkstyle).configureEach {
+    reports {
+        html.required = true
+        xml.required = false
+    }
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
     apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'checkstyle'
 
     group = 'com.sspdev'
     version = '0.0.1-SNAPSHOT'
