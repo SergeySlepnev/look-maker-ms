@@ -34,6 +34,10 @@ tasks.withType(Checkstyle).configureEach {
     }
 }
 
+tasks.named('checkstyleTest', Checkstyle) {
+    configFile = file("${rootDir}/config/checkstyle/checkstyle-tests.xml")
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
@@ -54,5 +58,9 @@ subprojects {
         toolchain {
             languageVersion = JavaLanguageVersion.of(21)
         }
+    }
+
+    tasks.withType(Checkstyle).configureEach {
+        configFile = file("${rootDir}/config/checkstyle/checkstyle-test.xml")
     }
 }
