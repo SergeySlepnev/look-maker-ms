@@ -1,6 +1,7 @@
 package com.sspdev.auth.application.util;
 
 import jakarta.annotation.Nullable;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,6 +13,7 @@ public class DataMasker {
     /**
      * Маскирует email адрес.
      * Пример: ivan.ivanov@example.com → iv********@example.com
+     * @return замаскированный email адрес
      */
     @Nullable
     public String maskEmail(String email) {
@@ -31,6 +33,7 @@ public class DataMasker {
     /**
      * Маскирует номер телефона.
      * Пример: +79991234567 → +7999123****67
+     * @return замаскированный email адрес
      */
     @Nullable
     public String maskPhone(String phone) {

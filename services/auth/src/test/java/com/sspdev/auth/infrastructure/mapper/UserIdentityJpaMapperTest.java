@@ -1,13 +1,14 @@
 package com.sspdev.auth.infrastructure.mapper;
 
-import com.sspdev.auth.domain.model.UserIdentity;
-import com.sspdev.auth.infrastructure.persistence.mapper.UserIdentityJpaMapper;
-import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
-import com.sspdev.auth.testutil.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import com.sspdev.auth.domain.model.UserIdentity;
+import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
+import com.sspdev.auth.infrastructure.persistence.mapper.UserIdentityJpaMapper;
+import com.sspdev.auth.testutil.TestDataUtil;
 
 public class UserIdentityJpaMapperTest {
 

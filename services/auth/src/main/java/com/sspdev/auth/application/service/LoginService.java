@@ -1,15 +1,16 @@
 package com.sspdev.auth.application.service;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.stream.Collectors;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import com.sspdev.auth.application.util.DataMasker;
 import com.sspdev.auth.domain.exception.InvalidCredentialException;
 import com.sspdev.auth.domain.port.out.UserIdentityRepository;
 import com.sspdev.auth.infrastructure.security.jwt.JwtTokenProvider;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import java.util.stream.Collectors;
 
 /**
  * Сервис аутентификации, отвечающий за проверку учётных данных пользователя и выдачу JWT.

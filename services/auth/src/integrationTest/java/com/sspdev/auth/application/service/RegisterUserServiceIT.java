@@ -1,16 +1,17 @@
 package com.sspdev.auth.application.service;
 
+import lombok.RequiredArgsConstructor;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
 import com.sspdev.auth.domain.port.in.RegisterUserCommand;
 import com.sspdev.auth.setup.IntegrationTestBase;
 import com.sspdev.auth.testutil.IntegrationTestDataUtil;
-import lombok.RequiredArgsConstructor;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
 
 @RequiredArgsConstructor
 public class RegisterUserServiceIT extends IntegrationTestBase {

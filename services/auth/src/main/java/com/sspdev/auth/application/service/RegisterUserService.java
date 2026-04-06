@@ -1,5 +1,15 @@
 package com.sspdev.auth.application.service;
 
+import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.sspdev.auth.application.util.DataMasker;
 import com.sspdev.auth.domain.exception.DomainException;
 import com.sspdev.auth.domain.exception.DomainExceptionCode;
@@ -11,15 +21,6 @@ import com.sspdev.auth.domain.port.in.RegisterUserResponse;
 import com.sspdev.auth.domain.port.in.RegisterUserUseCase;
 import com.sspdev.auth.domain.port.out.PasswordHasher;
 import com.sspdev.auth.domain.port.out.UserIdentityRepository;
-import jakarta.annotation.Nullable;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 /**
  * Сервис для регистрации новых пользователей в системе.
@@ -42,11 +43,10 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class RegisterUserService implements RegisterUserUseCase {
 
-    @Value("${auth.password.hash-algo}")
-    private static String DEFAULT_HASH_ALGO;
     private static final String UNIQUE_EMAIL_CONSTRAINT_NAME = "unique_user_email";
     private static final String UNIQUE_PHONE_CONSTRAINT_NAME = "unique_user_phone";
-
+    @Value("${auth.password.hash-algo}")
+    private static String DEFAULT_HASH_ALGO;
     private final UserIdentityRepository userIdentityRepository;
     private final PasswordHasher passwordHasher;
     private final DataMasker dataMasker;

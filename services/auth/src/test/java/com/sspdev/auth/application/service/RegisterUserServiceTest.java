@@ -1,27 +1,11 @@
 package com.sspdev.auth.application.service;
 
-import com.sspdev.auth.application.util.DataMasker;
-import com.sspdev.auth.domain.exception.DomainExceptionCode;
-import com.sspdev.auth.domain.exception.DomainException;
-import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
-import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
-import com.sspdev.auth.domain.model.UserIdentity;
-import com.sspdev.auth.domain.port.in.RegisterUserResponse;
-import com.sspdev.auth.domain.port.out.PasswordHasher;
-import com.sspdev.auth.domain.port.out.UserIdentityRepository;
-import com.sspdev.auth.testutil.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +18,23 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
+import com.sspdev.auth.application.util.DataMasker;
+import com.sspdev.auth.domain.exception.DomainException;
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
+import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
+import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
+import com.sspdev.auth.domain.model.UserIdentity;
+import com.sspdev.auth.domain.port.in.RegisterUserResponse;
+import com.sspdev.auth.domain.port.out.PasswordHasher;
+import com.sspdev.auth.domain.port.out.UserIdentityRepository;
+import com.sspdev.auth.testutil.TestDataUtil;
 
 @ExtendWith(MockitoExtension.class)
 public class RegisterUserServiceTest {

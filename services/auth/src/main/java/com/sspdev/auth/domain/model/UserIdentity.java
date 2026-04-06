@@ -1,9 +1,5 @@
 package com.sspdev.auth.domain.model;
 
-import com.sspdev.auth.domain.exception.EmptyPasswordException;
-import com.sspdev.auth.domain.exception.EmptyUserContactsException;
-import com.sspdev.auth.domain.exception.EmptyUserIdException;
-import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -12,6 +8,11 @@ import lombok.ToString;
 
 import java.util.Set;
 import java.util.UUID;
+
+import com.sspdev.auth.domain.exception.EmptyPasswordException;
+import com.sspdev.auth.domain.exception.EmptyUserContactsException;
+import com.sspdev.auth.domain.exception.EmptyUserIdException;
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -33,12 +34,21 @@ public class UserIdentity {
 
     private final Set<Role> roles;
 
-    public static UserIdentity createNew(UUID id, String email, String phone, String passwordHash, String passwordAlgo, Set<Role> roles) {
-        if (id == null) throw new EmptyUserIdException();
-        if ((email == null || email.isBlank()) && (phone == null || phone.isBlank()))
+    public static UserIdentity createNew(UUID id,
+                                         String email,
+                                         String phone,
+                                         String passwordHash,
+                                         String passwordAlgo,
+                                         Set<Role> roles) {
+        if (id == null) {
+            throw new EmptyUserIdException();
+        }
+        if ((email == null || email.isBlank()) && (phone == null || phone.isBlank())) {
             throw new EmptyUserContactsException();
-        if (passwordHash == null || passwordHash.isBlank())
+        }
+        if (passwordHash == null || passwordHash.isBlank()) {
             throw new EmptyPasswordException();
+        }
 
         return UserIdentity.builder()
                 .id(id)
