@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_identity")
+@Table(name = "user_identity", schema = "auth")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
