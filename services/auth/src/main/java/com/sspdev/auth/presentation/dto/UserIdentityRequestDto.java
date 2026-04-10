@@ -1,6 +1,5 @@
 package com.sspdev.auth.presentation.dto;
 
-import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Builder;
 
 import java.util.Set;
+
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 
 @Builder
 public record UserIdentityRequestDto(

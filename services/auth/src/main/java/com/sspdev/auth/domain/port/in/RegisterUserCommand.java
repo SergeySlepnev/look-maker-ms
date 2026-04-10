@@ -1,9 +1,10 @@
 package com.sspdev.auth.domain.port.in;
 
-import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import lombok.Builder;
 
 import java.util.Set;
+
+import com.sspdev.auth.infrastructure.persistence.entity.Role;
 
 @Builder
 public record RegisterUserCommand(String email,

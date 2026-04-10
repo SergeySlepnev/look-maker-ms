@@ -1,8 +1,8 @@
 package com.sspdev.auth.domain.port.out;
 
-import com.sspdev.auth.domain.model.UserIdentity;
-
 import java.util.Optional;
+
+import com.sspdev.auth.domain.model.UserIdentity;
 
 public interface UserIdentityRepository {
 

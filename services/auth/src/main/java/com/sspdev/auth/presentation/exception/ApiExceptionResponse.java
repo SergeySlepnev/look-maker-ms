@@ -1,7 +1,8 @@
 package com.sspdev.auth.presentation.exception;
 
-import com.sspdev.auth.domain.exception.DomainExceptionCode;
 import lombok.Builder;
+
+import com.sspdev.auth.domain.exception.DomainExceptionCode;
 
 @Builder
 public record ApiExceptionResponse(DomainExceptionCode errorCode,

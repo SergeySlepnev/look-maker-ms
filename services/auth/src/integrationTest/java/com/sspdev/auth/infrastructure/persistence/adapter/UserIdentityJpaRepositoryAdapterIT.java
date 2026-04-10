@@ -1,15 +1,16 @@
 package com.sspdev.auth.infrastructure.persistence.adapter;
 
-import com.sspdev.auth.domain.model.UserIdentity;
-import com.sspdev.auth.setup.IntegrationTestBase;
-import com.sspdev.auth.testutil.IntegrationTestDataUtil;
 import lombok.RequiredArgsConstructor;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import org.junit.jupiter.api.Test;
-import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.UUID;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataIntegrityViolationException;
+import com.sspdev.auth.domain.model.UserIdentity;
+import com.sspdev.auth.setup.IntegrationTestBase;
+import com.sspdev.auth.testutil.IntegrationTestDataUtil;
 
 @RequiredArgsConstructor
 class UserIdentityJpaRepositoryAdapterIT extends IntegrationTestBase {

@@ -1,11 +1,12 @@
 package com.sspdev.auth.infrastructure.localization;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.Locale;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ResourceBundleMessageSource;
-
-import java.util.Locale;
 
 public class SpringMessageResolverIT {
 

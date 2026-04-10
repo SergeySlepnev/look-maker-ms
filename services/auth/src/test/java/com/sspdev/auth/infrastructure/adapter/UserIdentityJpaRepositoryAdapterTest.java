@@ -1,18 +1,19 @@
 package com.sspdev.auth.infrastructure.adapter;
 
-import com.sspdev.auth.infrastructure.persistence.adapter.UserIdentityJpaRepositoryAdapter;
-import com.sspdev.auth.infrastructure.persistence.mapper.UserIdentityJpaMapper;
-import com.sspdev.auth.infrastructure.persistence.repository.UserIdentityEntityRepository;
-import com.sspdev.auth.testutil.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
+import com.sspdev.auth.infrastructure.persistence.adapter.UserIdentityJpaRepositoryAdapter;
+import com.sspdev.auth.infrastructure.persistence.mapper.UserIdentityJpaMapper;
+import com.sspdev.auth.infrastructure.persistence.repository.UserIdentityEntityRepository;
+import com.sspdev.auth.testutil.TestDataUtil;
 
 @ExtendWith(MockitoExtension.class)
 class UserIdentityJpaRepositoryAdapterTest {

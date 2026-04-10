@@ -1,15 +1,16 @@
 package com.sspdev.auth.presentation.controller;
 
-import com.sspdev.auth.application.service.LoginService;
-import com.sspdev.auth.presentation.dto.LoginRequestDto;
-import com.sspdev.auth.presentation.dto.LoginResponseDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.sspdev.auth.application.service.LoginService;
+import com.sspdev.auth.presentation.dto.LoginRequestDto;
+import com.sspdev.auth.presentation.dto.LoginResponseDto;
 
 @RestController
 @RequestMapping("/auth")

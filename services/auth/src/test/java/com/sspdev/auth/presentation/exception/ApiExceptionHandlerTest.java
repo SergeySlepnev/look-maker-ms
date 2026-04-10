@@ -1,5 +1,27 @@
 package com.sspdev.auth.presentation.exception;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Locale;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 import com.sspdev.auth.domain.exception.DomainException;
 import com.sspdev.auth.domain.exception.EmptyPasswordException;
 import com.sspdev.auth.domain.exception.EmptyUserContactsException;
@@ -8,28 +30,6 @@ import com.sspdev.auth.domain.exception.NotValidPasswordException;
 import com.sspdev.auth.domain.exception.UserByEmailAlreadyExistsException;
 import com.sspdev.auth.domain.exception.UserByPhoneAlreadyExistsException;
 import com.sspdev.auth.domain.port.out.MessageResolver;
-import com.sspdev.auth.presentation.exception.ApiExceptionHandler;
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.ArgumentCaptor;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import org.mockito.Captor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-
-import java.util.Locale;
-import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
 class ApiExceptionHandlerTest {
@@ -40,6 +40,22 @@ class ApiExceptionHandlerTest {
     private ApiExceptionHandler exceptionHandler;
     @Captor
     private ArgumentCaptor<Object[]> argsCaptor;
+
+    static Stream<Arguments> getExceptionsForBadRequest() {
+        return Stream.of(
+                Arguments.of(new EmptyPasswordException()),
+                Arguments.of(new EmptyUserContactsException()),
+                Arguments.of(new EmptyUserIdException()),
+                Arguments.of(new NotValidPasswordException()
+                ));
+    }
+
+    static Stream<Arguments> getExceptionsForConflictStatus() {
+        return Stream.of(
+                Arguments.of(new UserByEmailAlreadyExistsException("dymmy@gmail.com")),
+                Arguments.of(new UserByPhoneAlreadyExistsException("8989898989890")
+                ));
+    }
 
     @ParameterizedTest
     @MethodSource("getExceptionsForBadRequest")
@@ -167,21 +183,5 @@ class ApiExceptionHandlerTest {
         assertThat(actualArgs).isEqualTo(expectedArgs);
         assertThat(actualArgs.length).isEqualTo(1);
         assertThat(actualArgs).isEqualTo(expectedArgs);
-    }
-
-    static Stream<Arguments> getExceptionsForBadRequest() {
-        return Stream.of(
-                Arguments.of(new EmptyPasswordException()),
-                Arguments.of(new EmptyUserContactsException()),
-                Arguments.of(new EmptyUserIdException()),
-                Arguments.of(new NotValidPasswordException()
-                ));
-    }
-
-    static Stream<Arguments> getExceptionsForConflictStatus() {
-        return Stream.of(
-                Arguments.of(new UserByEmailAlreadyExistsException("dymmy@gmail.com")),
-                Arguments.of(new UserByPhoneAlreadyExistsException("8989898989890")
-                ));
     }
 }
