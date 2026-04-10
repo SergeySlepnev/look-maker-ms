@@ -1,16 +1,16 @@
 package com.sspdev.auth.infrastructure.localization;
 
-import com.sspdev.auth.infrastructure.localization.SpringMessageResolver;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import java.util.Locale;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.MessageSource;
-
-import java.util.Locale;
 
 @ExtendWith(MockitoExtension.class)
 public class SpringMessageResolverTest {

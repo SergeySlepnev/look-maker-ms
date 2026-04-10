@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_identity")
+@Table(name = "user_identity", schema = "auth")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,29 +31,24 @@ import java.util.UUID;
 @ToString(exclude = "passwordHash")
 public class UserIdentityJpaEntity {
 
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @EqualsAndHashCode.Include
-    private UUID id;
-
-    @Column(name = "email", columnDefinition = "CITEXT", unique = true)
-    private String email;
-
-    @Column(name = "phone", length = 32, unique = true)
-    private String phone;
-
-    @Column(name = "password_hash", nullable = false)
-    private String passwordHash;
-
-    @Column(name = "password_algo", nullable = false)
-    private String passwordAlgo;
-
     @Builder.Default
     @ElementCollection
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "user_roles", schema = "auth", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "role")
     Set<Role> roles = new HashSet<>();
+    @Id
+    @Column(name = "id", updatable = false, nullable = false)
+    @EqualsAndHashCode.Include
+    private UUID id;
+    @Column(name = "email", columnDefinition = "CITEXT", unique = true)
+    private String email;
+    @Column(name = "phone", length = 32, unique = true)
+    private String phone;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordHash;
+    @Column(name = "password_algo", nullable = false)
+    private String passwordAlgo;
 
     @PrePersist
     private void ensureId() {

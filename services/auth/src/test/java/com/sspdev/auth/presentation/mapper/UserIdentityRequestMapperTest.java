@@ -1,9 +1,10 @@
 package com.sspdev.auth.presentation.mapper;
 
-import com.sspdev.auth.testutil.TestDataUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+
 import org.junit.jupiter.api.Test;
+import com.sspdev.auth.testutil.TestDataUtil;
 
 class UserIdentityRequestMapperTest {
 

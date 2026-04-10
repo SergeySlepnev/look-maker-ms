@@ -1,11 +1,11 @@
 package com.sspdev.auth.infrastructure.persistence.repository;
 
-import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
 
 @Repository
 public interface UserIdentityEntityRepository extends JpaRepository<UserIdentityJpaEntity, UUID> {

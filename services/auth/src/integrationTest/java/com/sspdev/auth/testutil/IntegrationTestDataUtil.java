@@ -1,14 +1,15 @@
 package com.sspdev.auth.testutil;
 
+import lombok.experimental.UtilityClass;
+
+import java.util.Set;
+import java.util.UUID;
+
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.domain.port.in.RegisterUserCommand;
 import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
 import com.sspdev.auth.presentation.dto.UserIdentityRequestDto;
-import lombok.experimental.UtilityClass;
-
-import java.util.Set;
-import java.util.UUID;
 
 @UtilityClass
 public class IntegrationTestDataUtil {

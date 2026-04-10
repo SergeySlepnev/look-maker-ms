@@ -1,8 +1,8 @@
 package com.sspdev.auth.infrastructure.persistence.mapper;
 
+import org.springframework.stereotype.Component;
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.infrastructure.persistence.entity.UserIdentityJpaEntity;
-import org.springframework.stereotype.Component;
 
 @Component
 public class UserIdentityJpaMapper {

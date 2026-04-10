@@ -1,20 +1,21 @@
 package com.sspdev.auth.infrastructure.security.jwt;
 
+import lombok.RequiredArgsConstructor;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import com.sspdev.auth.domain.model.UserIdentity;
 import com.sspdev.auth.domain.port.out.UserIdentityRepository;
 import com.sspdev.auth.infrastructure.persistence.entity.Role;
 import com.sspdev.auth.setup.IntegrationTestBase;
 import com.sspdev.auth.testutil.IntegrationTestDataUtil;
-import lombok.RequiredArgsConstructor;
-import static org.assertj.core.api.Assertions.assertThat;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-
-import java.security.SecureRandom;
-import java.util.Base64;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class JwtTokenProviderIT extends IntegrationTestBase {
